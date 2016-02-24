@@ -1,5 +1,6 @@
 package com.freedomunits.guy.freedomunits;
 
+import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //setContentView(R.layout.fragment_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -59,8 +63,24 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+/*
+        Button kgToLbs = (Button) findViewById(R.id.button);
+        final EditText weightKG = (EditText) findViewById(R.id.kgWeight);
+        final EditText weightLB = (EditText) findViewById(R.id.lbWeight);
+        kgToLbs.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Double w;
+                w = Double.parseDouble(weightKG.getText().toString())* 2.20462;
+                weightLB.setText(Double.toString(w));
+            }
+        });
+ */
+
+
 
     }
+;
+
 
 
     @Override
@@ -116,6 +136,18 @@ public class MainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            Button kgToLbs = (Button) rootView.findViewById(R.id.button);
+            final EditText weightKG = (EditText) rootView.findViewById(R.id.kgWeight);
+            final EditText weightLB = (EditText) rootView.findViewById(R.id.lbWeight);
+            kgToLbs.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Double w;
+                    w = Double.parseDouble(weightKG.getText().toString()) * 2.20462;
+                    weightLB.setText(Double.toString(w));
+                }
+            });
+
             return rootView;
         }
     }
