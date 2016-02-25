@@ -21,6 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -142,9 +145,10 @@ public class MainActivity extends AppCompatActivity {
             final EditText weightLB = (EditText) rootView.findViewById(R.id.lbWeight);
             kgToLbs.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Double w;
-                    w = Double.parseDouble(weightKG.getText().toString()) * 2.20462;
-                    weightLB.setText(Double.toString(w));
+                 //need to convert to big decimal then round up to safety in precision and keeping two decimal places
+                    BigDecimal bd = new BigDecimal( Double.parseDouble(weightKG.getText().toString()) * 2.20462);
+                    bd = bd.setScale(2, RoundingMode.HALF_UP);
+                    weightLB.setText(String.valueOf(bd));
                 }
             });
 
