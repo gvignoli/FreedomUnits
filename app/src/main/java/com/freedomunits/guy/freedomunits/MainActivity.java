@@ -66,23 +66,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-/*
-        Button kgToLbs = (Button) findViewById(R.id.button);
-        final EditText weightKG = (EditText) findViewById(R.id.kgWeight);
-        final EditText weightLB = (EditText) findViewById(R.id.lbWeight);
-        kgToLbs.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Double w;
-                w = Double.parseDouble(weightKG.getText().toString())* 2.20462;
-                weightLB.setText(Double.toString(w));
-            }
-        });
- */
-
-
 
     }
-;
+
 
 
 
@@ -130,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
+
+            //fragment = FirstFragment.newInstance(0, "Page # 1");
             return fragment;
         }
 
@@ -137,20 +125,10 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
-            Button kgToLbs = (Button) rootView.findViewById(R.id.button);
-            final EditText weightKG = (EditText) rootView.findViewById(R.id.kgWeight);
-            final EditText weightLB = (EditText) rootView.findViewById(R.id.lbWeight);
-            kgToLbs.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                 //need to convert to big decimal then round up to safety in precision and keeping two decimal places
-                    BigDecimal bd = new BigDecimal( Double.parseDouble(weightKG.getText().toString()) * 2.20462);
-                    bd = bd.setScale(2, RoundingMode.HALF_UP);
-                    weightLB.setText(String.valueOf(bd));
-                }
-            });
 
             return rootView;
         }
@@ -170,7 +148,9 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            //return PlaceholderFragment.newInstance(position + 1);
+            //FirstFragment f = FirstFragment.newInstance(0, "Page # 1");
+            return FirstFragment.newInstance(0, "Page # 1"); //this now calls my new "FirstFRassgment" class and NOT "PlaceholderFrasgment"
         }
 
         @Override
