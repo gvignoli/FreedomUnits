@@ -110,17 +110,20 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     System.out.println("case 0");
                     System.out.println("position: " + position);
-                    return Weight.newInstance(0, "Weight"); //this now calls my new "FirstFRassgment" class and NOT "PlaceholderFrasgment"
+                    return Weight.newInstance(0, "Weight"); //this now calls my new "weight fragment
                 case 1:
                     System.out.println("case 1");
                     System.out.println("position: " + position);
-                    return Speed.newInstance(1, "Speed"); //this now calls my new "FirstFRassgment" class and NOT "PlaceholderFrasgment"
+                    return Speed.newInstance(1, "Speed"); //this now calls my new weight fragment
                 case 2:
                     System.out.println("case 2");
                     System.out.println("position: " + position);
-                    return Speed.newInstance(1, "Speed"); //this now calls my new "FirstFRassgment" class and NOT "PlaceholderFrasgment"
+                    return Length.newInstance(2, "length"); //this now calls my new length fragment
+               /* case 3:
+                    System.out.println("case 3");
+                    System.out.println("position: " + position);
+                    return Length.newInstance(2, "length"); //this now calls my new length fragment */
             }
-            //return Weight.newInstance(0, "Page # 1"); //this now calls my new "FirstFRassgment" class and NOT "PlaceholderFrasgment"
             System.out.println("returned null");
             System.out.println("position: " + position);
             return null;
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 3; //this number MUST MATCH number of fragments or else i get a null fragment and its BADDDD
         }
 
         @Override
@@ -141,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
+                case 3:
+                    return "SECTION 4";
             }
             return null;
         }
