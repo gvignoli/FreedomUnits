@@ -2,6 +2,7 @@ package com.freedomunits.guy.freedomunits;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(mViewPager);
 
 
     }
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private String tabTitles[] = new String[] { "Weight", "Speed", "Length" };
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -128,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
+            return tabTitles[position];
+            /*switch (position) {
                 case 0:
                     return "SECTION 1";
                 case 1:
@@ -138,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     return "SECTION 4";
             }
-            return null;
+            return null; */
         }
     }
 }
