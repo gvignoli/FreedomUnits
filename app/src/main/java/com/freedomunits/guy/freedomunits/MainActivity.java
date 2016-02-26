@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        final int PAGE_COUNT = 3;  //this number MUST MATCH number of fragments or else i get a null fragment and its BADDDD
         private String tabTitles[] = new String[] { "Weight", "Speed", "Length" };
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -101,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             //return PlaceholderFragment.newInstance(position + 1);
-            //Weight f = Weight.newInstance(0, "Page # 1");
             switch (position) {
                 case 0:
                     System.out.println("case 0");
@@ -127,24 +127,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3; //this number MUST MATCH number of fragments or else i get a null fragment and its BADDDD
+            // return total page number.
+            return PAGE_COUNT;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return tabTitles[position];
-            /*switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-                case 3:
-                    return "SECTION 4";
-            }
-            return null; */
         }
     }
 }
