@@ -1,26 +1,40 @@
 package com.freedomunits.guy.freedomunits;
 
 //import android.app.Fragment;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+        import android.content.DialogInterface;
+        import android.support.v4.app.Fragment;
+        import android.os.Bundle;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.AdapterView;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.ListView;
+        import android.widget.Spinner;
+        import android.widget.Toast;
+        import android.view.View.OnClickListener;
+        import java.math.BigDecimal;
+        import java.math.RoundingMode;
+        import java.util.ArrayList;
+        import java.util.HashMap;
+        import java.util.List;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+        import static android.R.layout.simple_spinner_dropdown_item;
 
 /**
  * Created by guy on 2/24/2016.
  */
-public  class Weight extends Fragment {
+public  class Weight extends Fragment implements AdapterView.OnItemSelectedListener {
     // Store instance variables
     private String title;
     private int page;
-
+    private Spinner spinner1, spinner2;
+    private ListView dataAdapter;
+    private HashMap  units;
     public Weight(){
+
 
     }
 
@@ -40,6 +54,10 @@ public  class Weight extends Fragment {
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
+        units = new HashMap();
+        units.put("cg", .01);//multiply # of gram * .01 to get cg
+        //addListenerOnButton();
+        //addListenerOnSpinnerItemSelection();
     }
 
     // Inflate the view for the fragment based on layout XML
@@ -58,7 +76,38 @@ public  class Weight extends Fragment {
                 weightLB.setText(String.valueOf(bd));
             }
         });
+        addItemsOnSpinner2(view);
         return view;
+    }
+
+
+    public void addItemsOnSpinner2(View v) {
+        spinner2 = (Spinner) v.findViewById(R.id.spinnerWeight);
+        List<String> list = new ArrayList<String>();
+        list.add("cg");//centigram
+        list.add("dg"); //decigram
+        list.add("g"); //gram
+        list.add("dag");//dekagram
+        list.add("hg"); //hectogram
+        list.add("kg");//kilogram
+        list.add("t");//metric ton
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, list);
+        spinner2.setAdapter(dataAdapter);
+        spinner2.setOnItemSelectedListener(this);
+    }
+
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        String temp = "";
+        temp = String.valueOf(parent.getItemAtPosition(pos));
+        System.out.println("temp: " + temp);//works!!
+
+    }
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
 }
