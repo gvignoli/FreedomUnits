@@ -54,7 +54,7 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerSpeed"
         android:layout_toEndOf="@+id/kphSpeed"
         android:layout_alignTop="@+id/kphSpeed"
         android:layout_above="@+id/mphSpeed"

@@ -30,9 +30,9 @@ public  class Weight extends Fragment implements AdapterView.OnItemSelectedListe
     // Store instance variables
     private String title;
     private int page;
-    private Spinner spinner1, spinner2;
+    private Spinner  spinner2;
     private ListView dataAdapter;
-    private HashMap  units;
+    private HashMap<String, Double>  units;
     public Weight(){
 
 
@@ -54,8 +54,15 @@ public  class Weight extends Fragment implements AdapterView.OnItemSelectedListe
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
-        units = new HashMap();
+        units = new HashMap(); //hash map to store unit anc conversion factor FROM GRAMS...must convert all things to grams first
+        units.put("UNIT", 0.0);//multiply by 0
         units.put("cg", .01);//multiply # of gram * .01 to get cg
+        units.put("dg", .1);//multiply # of gram * .1 to get dg
+        units.put("g", 1.0);//multiply # of gram * 1 to get g
+        units.put("dag", 10.0);//multiply # of gram * 10 to get g
+        units.put("hg", 100.0);//multiply # of gram * 100 to get g
+        units.put("kg", 1000.0);//multiply # of gram * 1000 to get g
+        units.put("t", 10000.0);//multiply # of gram * 10000 to get g
         //addListenerOnButton();
         //addListenerOnSpinnerItemSelection();
     }
@@ -64,19 +71,20 @@ public  class Weight extends Fragment implements AdapterView.OnItemSelectedListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        final View view = inflater.inflate(R.layout.fragment_main, container, false);
+        addItemsOnSpinner2(view);
+
         Button kgToLbs = (Button) view.findViewById(R.id.button);
         final EditText weightKG = (EditText) view.findViewById(R.id.kgWeight);
         final EditText weightLB = (EditText) view.findViewById(R.id.lbWeight);
         kgToLbs.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //need to convert to big decimal then round up to safety in precision and keeping two decimal places
-                BigDecimal bd = new BigDecimal(Double.parseDouble(weightKG.getText().toString()) * 2.20462);
-                bd = bd.setScale(2, RoundingMode.HALF_UP);
-                weightLB.setText(String.valueOf(bd));
+                BigDecimal converted = convert(String.valueOf(spinner2.getSelectedItem()), view);
+                weightLB.setText(converted.toString());
             }
         });
-        addItemsOnSpinner2(view);
+
         return view;
     }
 
@@ -84,6 +92,7 @@ public  class Weight extends Fragment implements AdapterView.OnItemSelectedListe
     public void addItemsOnSpinner2(View v) {
         spinner2 = (Spinner) v.findViewById(R.id.spinnerWeight);
         List<String> list = new ArrayList<String>();
+        list.add("UNIT");//blank unit
         list.add("cg");//centigram
         list.add("dg"); //decigram
         list.add("g"); //gram
@@ -110,4 +119,14 @@ public  class Weight extends Fragment implements AdapterView.OnItemSelectedListe
         // Another interface callback
     }
 
+    private BigDecimal convert(String curUnit, View v){
+        final EditText weightKG = (EditText) v.findViewById(R.id.kgWeight);
+        BigDecimal toGram = new BigDecimal(0.00220462);
+        units.get(curUnit);
+        BigDecimal gram = new BigDecimal(Double.parseDouble(weightKG.getText().toString()) * units.get(curUnit));
+        BigDecimal lb = gram.multiply(toGram);
+        lb = lb.setScale(2, RoundingMode.HALF_UP);
+
+        return lb;
+    }
 }
